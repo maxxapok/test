@@ -471,3 +471,4 @@ function getMessage(data) {
 }
 
 // привет
+// пока
