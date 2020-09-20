@@ -1,6 +1,6 @@
 "use strict";
 
-// akfjghwrjekfghkajhsgfkjfdhgkjhdfkjgdhsf
+// для Сергея
 
 const currentImg = document.querySelector(".current-image");
 const wrap = document.querySelector('.wrap');
