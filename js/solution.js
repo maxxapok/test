@@ -1,5 +1,7 @@
 "use strict";
 
+// akfjghwrjekfghkajhsgfkjfdhgkjhdfkjgdhsf
+
 const currentImg = document.querySelector(".current-image");
 const wrap = document.querySelector('.wrap');
 const menu = document.querySelector('.menu');
@@ -12,17 +14,25 @@ const menuUrl = document.querySelector('.menu__url');
 const mode = document.querySelectorAll('.mode');	
 // const share = document.querySelector('.share');
 
-// burger.style.display = 'none'; вид по заданию
+// burger.style.display = 'none'; 
+// вид по заданию
+
+// menu.dataset.state = 'default';
+
+// костыль чтоб бургер работал
+getMenuDefault();
+burger.addEventListener('click', getMenuSelected);
+// burger.addEventListener('click', getMenuSelected);
+ 
 
 function getImg() {
 	let imgFromStorage = JSON.parse(localStorage.img);
 	currentImg.src = imgFromStorage.url;
 }
 
-
 if (localStorage.length !== 0) {
 	getImg();
-	getMenuSelectedShare();
+	// getMenuSelectedShare();
 } else {
 	
 	hideCurrentImg(); 
@@ -164,7 +174,7 @@ function onSecondDrop(event) {
 }
 
 const send = function() {
-	console.log(files[0].type);
+	// console.log(files[0].type);
 
 	const error = document.querySelector(".error");
 
@@ -195,32 +205,18 @@ function onLoadEnd(response) {
 	try {
 		loader.style.display = 'none';
 
-    // menu.dataset.state = 'selected';
-    // mode.forEach(elem => elem.dataset.state = '');
-    // share.dataset.state = 'selected';
-
     const imageObject = JSON.parse(response);
-
- // currentImg.addEventListener('load', () => {
- //        // createCommentsWrap();
- //        // createCanvas();
- //        // createUserImg();
- //        // updateComments(res.comments);
- //        // drawUsersStrokes(res.mask);
- //        currentImg.dataset.load = 'load';
- //    });
-
 
  currentImg.src = imageObject.url;
 
 // window.history.pushState(null, null, url);
 const url = document.location.href.split('?')[0] + '?id=' + imageObject.id;
-console.log(url);
+// console.log(url);
 
 		// const url = 'https://maxxapok.github.io/diplonama/index.html' + '?id=' + imageObject.id;
 		menuUrl.value = url;
 
-		window.history.pushState(null, null, url);
+		// window.history.pushState(null, null, url);
 
 		getWsSrc(imageObject.id);
 		setTimeout(currentImgDisplay, 1000);
@@ -229,7 +225,7 @@ console.log(url);
 
 		wrap.removeEventListener('drop', onSelectFilesDrop);
 		wrap.addEventListener('drop', onSecondDrop);
-	} catch(e) {
+ 	} catch(e) {
 		alert('При публикации произошла ошибка: '+e.message+'. Попробуйте заново загрузить изображение');
 	}
 }
@@ -239,7 +235,6 @@ console.log(url);
 function getMenuSelectedShare() {
 	menu.dataset.state = 'selected';
 	share.dataset.state = 'selected';
-	// comments.dataset.state = 'default';
 }
 
 function getMenuSelectedComments() {
@@ -252,14 +247,29 @@ function getMenuSelectedDraw() {
 	draw.dataset.state = 'selected';
 }
 
+// 2 функции для костыля чтоб бургер работал
+
 function getMenuDefault() {
-	menu.dataset.state = 'default';
+
 	const menuItemsWithDataAttr = document.querySelectorAll(".menu__item[data-state]");
 	
 	for (let item of menuItemsWithDataAttr) {
+		item.style.display = 'none';
+
+	}
+}
+
+function getMenuSelected(event) {
+	const menuItemsWithDataAttr = document.querySelectorAll(".menu__item[data-state]");
+    // menu.dataset.state = 'selected';
+	
+	for (let item of menuItemsWithDataAttr) {
+		item.style.display = 'inline-block';
 		item.dataset.state = 'default';
 	}
 }
+
+
 
 function currentImgDisplay() {
 	currentImg.style.display = "block";
@@ -300,7 +310,7 @@ comments.addEventListener('click', getMenuSelectedComments);
 share.addEventListener('click', getMenuSelectedShare);
 draw.addEventListener('click', getMenuSelectedDraw);
 document.addEventListener('error', onError);
-burger.addEventListener('click', getMenuDefault);
+// document.addEventListener('blur', getMenuSelectedComments);
 menuCopy.addEventListener('click',copyToBuffer);
 
 // сделать переход по ссылке!!!
@@ -337,7 +347,7 @@ function menuToggleGetOff () {
 		for (let item of commentsFormCol) {
 			item.style.display = 'none';
 		}
-	} 	
+ 	} 	
 }
 menuToggleOn.addEventListener('click', menuToggleGetOn);
 menuToggleTitleOn.addEventListener('click', menuToggleGetOn);
@@ -444,7 +454,7 @@ function displayMessage(commentsText, commentsArea) {
 
 function getMessage(data) {
 
-	console.log(data);
+	// console.log(data);
 
 	const dataParsed = JSON.parse(data);
 
@@ -469,6 +479,12 @@ function getMessage(data) {
 	}
 
 }
+
+// const regexp = /id=([^&]+)/i;
+// if (!!regexp.exec(document.location.search)) {
+//     let picID = regexp.exec(document.location.search)[1];
+//     console.log(picID);
+// }
 
 // привет
 // пока
