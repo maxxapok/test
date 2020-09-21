@@ -233,7 +233,7 @@ const url = document.location.href.split('?')[0] + '?id=' + imageObject.id;
 // 3 функции обЪединить
 
 function resetSelection() {
-	// menu.dataset.state = 'default';
+	menu.dataset.state = 'initial';
 	share.dataset.state = 'default';
 	comments.dataset.state = 'default';
 	draw.dataset.state = 'default';
