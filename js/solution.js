@@ -23,7 +23,7 @@ const mode = document.querySelectorAll('.mode');
 getMenuDefault();
 burger.addEventListener('click', getMenuSelected);
 // burger.addEventListener('click', getMenuSelected);
- 
+
 
 function getImg() {
 	let imgFromStorage = JSON.parse(localStorage.img);
@@ -205,9 +205,9 @@ function onLoadEnd(response) {
 	try {
 		loader.style.display = 'none';
 
-    const imageObject = JSON.parse(response);
+		const imageObject = JSON.parse(response);
 
- currentImg.src = imageObject.url;
+		currentImg.src = imageObject.url;
 
 // window.history.pushState(null, null, url);
 const url = document.location.href.split('?')[0] + '?id=' + imageObject.id;
@@ -225,26 +225,42 @@ const url = document.location.href.split('?')[0] + '?id=' + imageObject.id;
 
 		wrap.removeEventListener('drop', onSelectFilesDrop);
 		wrap.addEventListener('drop', onSecondDrop);
- 	} catch(e) {
+	} catch(e) {
 		alert('При публикации произошла ошибка: '+e.message+'. Попробуйте заново загрузить изображение');
 	}
 }
 
 // 3 функции обЪединить
 
+function resetSelection() {
+	// menu.dataset.state = 'default';
+	share.dataset.state = 'default';
+	comments.dataset.state = 'default';
+	draw.dataset.state = 'default';
+}
+
 function getMenuSelectedShare() {
+	resetSelection();
 	menu.dataset.state = 'selected';
 	share.dataset.state = 'selected';
+	comments.style.display = 'none';
+	draw.style.display = 'none';
 }
 
 function getMenuSelectedComments() {
+	resetSelection();
 	menu.dataset.state = 'selected';
 	comments.dataset.state = 'selected';
+	share.style.display = 'none';
+	draw.style.display = 'none';
 }
 
 function getMenuSelectedDraw() {
+	resetSelection();
 	menu.dataset.state = 'selected';
 	draw.dataset.state = 'selected';
+	share.style.display = 'none';
+	comments.style.display = 'none';
 }
 
 // 2 функции для костыля чтоб бургер работал
@@ -255,20 +271,19 @@ function getMenuDefault() {
 	
 	for (let item of menuItemsWithDataAttr) {
 		item.style.display = 'none';
-
-	}
+	}	
 }
 
 function getMenuSelected(event) {
+
+	resetSelection();
 	const menuItemsWithDataAttr = document.querySelectorAll(".menu__item[data-state]");
-    // menu.dataset.state = 'selected';
-	
+
 	for (let item of menuItemsWithDataAttr) {
 		item.style.display = 'inline-block';
-		item.dataset.state = 'default';
 	}
+	
 }
-
 
 
 function currentImgDisplay() {
@@ -347,7 +362,7 @@ function menuToggleGetOff () {
 		for (let item of commentsFormCol) {
 			item.style.display = 'none';
 		}
- 	} 	
+	} 	
 }
 menuToggleOn.addEventListener('click', menuToggleGetOn);
 menuToggleTitleOn.addEventListener('click', menuToggleGetOn);
